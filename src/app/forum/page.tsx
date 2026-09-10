@@ -1,4 +1,5 @@
 import React from "react";
+import { ForumHero } from "@/components/features/forum/forum-hero";
 import { PostCard } from "@/components/features/forum/post-card";
 import { ForumSidebar } from "@/components/features/forum/forum-sidebar";
 import { Footer } from "@/components/layout/footer";
@@ -21,6 +22,7 @@ const mockPosts: Post[] = [
     },
     category: "تصميم UI/UX",
     commentsCount: 120,
+    content: "",
   },
   {
     id: "2",
@@ -38,6 +40,7 @@ const mockPosts: Post[] = [
     },
     category: "تصميم UI/UX",
     commentsCount: 85,
+    content: "",
   },
 ];
 
@@ -45,17 +48,10 @@ export default function ForumPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col justify-between">
       <div>
-        {/* Banner */}
-        <div className="bg-sky-50/60 border-b border-sky-100 py-10 text-center dir-rtl">
-          <h1 className="text-2xl font-extrabold text-gray-800">المنتدى</h1>
-          <div className="flex items-center justify-center gap-6 mt-4 text-xs text-gray-500 font-medium">
-            <span className="text-sky-500 font-bold border-b-2 border-sky-400 pb-1 cursor-pointer">
-              الجميع
-            </span>
-            <span className="hover:text-gray-800 cursor-pointer">اخبار</span>
-            <span className="hover:text-gray-800 cursor-pointer">منشورات</span>
-          </div>
-        </div>
+        {/* Top Header Navigation */}
+
+        {/* Dynamic Forum Hero Banner */}
+        <ForumHero />
 
         {/* Content Container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col lg:flex-row gap-8 dir-rtl">
@@ -73,6 +69,7 @@ export default function ForumPage() {
         </div>
       </div>
 
+      {/* Global Dark Footer */}
       <Footer />
     </div>
   );
