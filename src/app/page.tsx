@@ -221,25 +221,27 @@ export default function HomePage() {
               whileHover={{ y: -5 }}
               className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group cursor-pointer"
             >
-              <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-slate-700 shadow-sm">
-                  {course.category}
+              <Link href={`/courses/${course.id}`}>
+                <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                  />
+                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-slate-700 shadow-sm">
+                    {course.category}
+                  </div>
                 </div>
-              </div>
-              <div className="p-5 space-y-4">
-                <div className="flex items-center gap-1 text-amber-400 font-bold text-xs">
-                  <Star className="w-4 h-4 fill-current" />
-                  <span>{course.rating}</span>
+                <div className="p-5 space-y-4">
+                  <div className="flex items-center gap-1 text-amber-400 font-bold text-xs">
+                    <Star className="w-4 h-4 fill-current" />
+                    <span>{course.rating}</span>
+                  </div>
+                  <h3 className="text-base font-black text-slate-800 group-hover:text-sky-500 transition line-clamp-2">
+                    {course.title}
+                  </h3>
                 </div>
-                <h3 className="text-base font-black text-slate-800 group-hover:text-sky-500 transition line-clamp-2">
-                  {course.title}
-                </h3>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
@@ -314,7 +316,7 @@ export default function HomePage() {
               التعليمية المتاحة على الإنترنت.
             </p>
             <Link
-              href="/register"
+              href="login"
               className="inline-flex items-center justify-center gap-2 bg-[#60ceeb] hover:bg-sky-400 text-white px-10 py-4 rounded-2xl text-sm font-bold transition shadow-lg shadow-sky-500/30 hover:-translate-y-1 relative z-10"
             >
               أنشئ حسابك مجاناً

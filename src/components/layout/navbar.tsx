@@ -96,19 +96,20 @@ export function Navbar() {
           </button>
 
           {/* Profile Badge */}
-          <div className="hidden sm:flex items-center gap-2 pr-3 border-r border-gray-200">
+          <Link
+            href={"/profile"}
+            className="hidden sm:flex items-center gap-2 pr-3 border-r border-gray-200"
+          >
             <div className="relative w-9 h-9 rounded-full overflow-hidden border border-sky-100 shadow-sm">
               <Image
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80"
-                alt="المدرب. محمد الشيخ"
+                alt="ملفي الشخصي"
                 fill
                 className="object-cover"
               />
             </div>
-            <span className="text-xs font-bold text-gray-800">
-              المدرب. محمد الشيخ
-            </span>
-          </div>
+            <span className="text-xs font-bold text-gray-800">ملفي الشخصي</span>
+          </Link>
 
           {/* Mobile Menu Toggle Button */}
           <button
@@ -158,14 +159,14 @@ export function Navbar() {
             <div className="relative w-10 h-10 rounded-full overflow-hidden border border-sky-100">
               <Image
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80"
-                alt="المدرب. محمد الشيخ"
+                alt="المهندس. بشار معاز"
                 fill
                 className="object-cover"
               />
             </div>
             <div>
               <p className="text-xs font-bold text-gray-800">
-                المدرب. محمد الشيخ
+                المهندس. بشار معاز
               </p>
               <p className="text-[10px] text-gray-400">حساب موثق</p>
             </div>

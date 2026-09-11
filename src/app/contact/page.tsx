@@ -61,7 +61,7 @@ export default function ContactPage() {
                   العنوان
                 </h4>
                 <p className="text-xs text-slate-500 font-medium">
-                  سوريا، حمص، شارع التكنولوجيا
+                  سوريا، حلب، الجميلية
                 </p>
               </div>
             </div>
