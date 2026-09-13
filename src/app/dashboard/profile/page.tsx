@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   User,
   Mail,
@@ -10,20 +10,32 @@ import {
   Clock,
   Globe,
   Plus,
-  AlertTriangle,
+  Loader2,
 } from "lucide-react";
 
 export default function DashboardProfilePage() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    // تنفيذ عملية التحديث هنا (API call / Server Action)
+    setTimeout(() => setLoading(false), 1000);
+  };
+
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-6 sm:p-8 space-y-8 shadow-sm dir-rtl font-sans">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-2xl border border-gray-100 p-6 sm:p-8 space-y-8 shadow-sm dir-rtl font-sans"
+    >
       {/* 1. معلومات الحساب الأساسية */}
       <div className="space-y-5">
         <div>
           <h3 className="text-base font-extrabold text-gray-800">
-            معلومات الحساب الاساسية
+            معلومات الحساب الأساسية
           </h3>
           <p className="text-xs text-gray-400 mt-1">
-            تتضمن هذه الإعدادات معلومات أساسية عن حسابك.
+            تتضمن هذه الإعدادات معلومات أساسية عن حسابك الشخصي.
           </p>
         </div>
 
@@ -36,21 +48,24 @@ export default function DashboardProfilePage() {
             </label>
             <input
               type="text"
-              defaultValue="Moahhedmajf 13hd@Gmail.com"
+              name="fullName"
+              placeholder="محمد أحمد الشيخ"
               className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400"
             />
           </div>
 
-          {/* البريد الالكتروني */}
+          {/* البريد الإلكتروني */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
               <Mail className="w-3.5 h-3.5 text-gray-400" />
-              البريد الالكتروني
+              البريد الإلكتروني
             </label>
             <input
               type="email"
-              defaultValue="Moahhedmajf 13hd@Gmail.com"
+              name="email"
+              placeholder="example@gmail.com"
               className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400"
+              dir="ltr"
             />
           </div>
 
@@ -61,9 +76,9 @@ export default function DashboardProfilePage() {
               تاريخ الميلاد
             </label>
             <input
-              type="text"
-              defaultValue="2025 / 05 / 02"
-              className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400 text-right"
+              type="date"
+              name="birthDate"
+              className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400"
             />
           </div>
 
@@ -79,8 +94,9 @@ export default function DashboardProfilePage() {
                 <span>+963</span>
               </div>
               <input
-                type="text"
-                defaultValue="9637260312"
+                type="tel"
+                name="phone"
+                placeholder="9637260312"
                 className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400 text-right"
               />
             </div>
@@ -91,67 +107,80 @@ export default function DashboardProfilePage() {
         <div className="space-y-1.5">
           <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
             <FileText className="w-3.5 h-3.5 text-gray-400" />
-            وصف الطالب
+            نبذة عن الطالب
           </label>
           <textarea
             rows={3}
-            defaultValue="2025 / 05 / 02"
+            name="bio"
+            placeholder="اكتب نبذة مختصرة عن مؤهلاتك واهتماماتك..."
             className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl p-4 text-xs text-gray-700 focus:outline-none focus:border-sky-400 resize-none"
           />
         </div>
       </div>
 
+      <hr className="border-gray-100" />
+
       {/* 2. معلومات التطوع */}
-      <div className="space-y-5 pt-2">
+      <div className="space-y-5">
         <div>
           <h3 className="text-base font-extrabold text-gray-800">
             معلومات التطوع
           </h3>
           <p className="text-xs text-gray-400 mt-1">
-            تتضمن هذه الإعدادات معلومات التطوع الأساسية والمهمة
+            حدد أوقات تفضيلك للمشاركة في الأنشطة والمشاريع التطوعية.
           </p>
         </div>
 
         <div className="space-y-1.5">
           <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5 text-gray-400" />
-            اكتب لنا الايام المتاح بها والساعات المتاحة
+            الأيام والساعات المتاحة
           </label>
           <textarea
             rows={3}
-            defaultValue="2025 / 05 / 02"
+            name="availability"
+            placeholder="مثال: الأحد والأربعاء من الساعة 4 مساءً حتى 8 مساءً"
             className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl p-4 text-xs text-gray-700 focus:outline-none focus:border-sky-400 resize-none"
           />
         </div>
       </div>
 
-      {/* 3. معلومات اضافية */}
-      <div className="space-y-5 pt-2">
+      <hr className="border-gray-100" />
+
+      {/* 3. معلومات إضافية */}
+      <div className="space-y-5">
         <h3 className="text-base font-extrabold text-gray-800">
-          معلومات اضافية
+          معلومات إضافية
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* الجنس */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-gray-700">الجنس</label>
-            <select className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400 appearance-none">
-              <option>ذكر</option>
-              <option>أنثى</option>
+            <select
+              name="gender"
+              className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400"
+            >
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
             </select>
           </div>
 
-          {/* بلد الاقامة */}
+          {/* بلد الإقامة */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5 text-gray-400" />
-              بلد الاقامة
+              بلد الإقامة
             </label>
-            <div className="relative">
-              <select className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400 appearance-none">
-                <option>سوريا 🇸🇾</option>
-              </select>
-            </div>
+            <select
+              name="country"
+              className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400"
+            >
+              <option value="SY">سوريا 🇸🇾</option>
+              <option value="SA">السعودية 🇸🇦</option>
+              <option value="AE">الإمارات 🇦🇪</option>
+              <option value="EG">مصر 🇪🇬</option>
+            </select>
           </div>
         </div>
 
@@ -160,10 +189,13 @@ export default function DashboardProfilePage() {
           <label className="text-xs font-bold text-gray-700">
             المرحلة الدراسية
           </label>
-          <select className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400 appearance-none">
-            <option>خريج / طالب جامعي / بكالوريا</option>
-            <option>طالب ثانوي</option>
-            <option>أخرى</option>
+          <select
+            name="educationLevel"
+            className="w-full bg-[#f8fafc] border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-700 focus:outline-none focus:border-sky-400"
+          >
+            <option value="university">طالب جامعي / خريج</option>
+            <option value="highschool">طالب ثانوي</option>
+            <option value="other">أخرى</option>
           </select>
         </div>
 
@@ -173,43 +205,58 @@ export default function DashboardProfilePage() {
             السيرة الذاتية (CV)
           </label>
           <p className="text-[11px] text-gray-400 mb-2">
-            من فضلك يجب أن يكون الملف معبر واحترافي
+            يرجى رفع ملف بصيغة PDF يوضح خبراتك ومؤهلاتك.
           </p>
-          <div className="border border-gray-200 rounded-xl bg-[#f8fafc] p-8 text-center hover:bg-gray-50 cursor-pointer transition flex items-center justify-center">
+          <label className="border border-dashed border-gray-300 rounded-xl bg-[#f8fafc] p-8 text-center hover:bg-slate-50 cursor-pointer transition flex flex-col items-center justify-center gap-2 block">
+            <input type="file" accept=".pdf" className="hidden" />
             <div className="w-9 h-9 rounded-full bg-[#60ceeb] text-white flex items-center justify-center shadow-sm">
               <Plus className="w-5 h-5" />
             </div>
-          </div>
+            <span className="text-xs font-bold text-slate-600">
+              اضغط هنا لرفع الملف
+            </span>
+          </label>
         </div>
       </div>
 
-      {/* 4. حذف الحساب */}
-      <div className="pt-4 space-y-4">
-        <div>
-          <h3 className="text-base font-extrabold text-gray-800">حذف الحساب</h3>
-          <p className="text-xs text-gray-400 mt-0.5">يؤسفنا أن نراك تغادر!</p>
-        </div>
-
-        <div className="space-y-3 text-xs text-gray-500 leading-relaxed bg-rose-50/30 p-4 rounded-xl border border-rose-100/50">
-          <p>
-            يرجى الملاحظة: حذف حسابك وبياناتك الشخصية دائم ولا يمكن التراجع عنه.
-            لن تتمكن منصة إدراك من استعادة حسابك أو البيانات التي تم حذفها.
-          </p>
-          <p>
-            قد تفقد أيضًا الوصول إلى الشهادات الموثقة وبيانات اعتماد البرنامج
-            الأخرى مثل شهادات التخصصات. إذا كنت ترغب بعمل نسخة من السجلات الخاصة
-            بك قبل متابعة الحذف، قم بأتباع الإرشادات الخاصة بـ{" "}
-            <a href="#" className="text-sky-500 underline font-bold">
-              طباعة أو تنزيل شهادة
-            </a>
-            .
-          </p>
-        </div>
-
-        <button className="bg-rose-100 hover:bg-rose-200 text-rose-600 px-6 py-2.5 rounded-xl text-xs font-bold transition">
-          حذف الحساب
+      {/* زر حفظ التعديلات */}
+      <div className="pt-2 flex justify-end">
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-[#60ceeb] hover:bg-sky-400 text-white font-bold px-8 py-3 rounded-xl transition text-xs shadow-md shadow-sky-100 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+        >
+          {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+          <span>حفظ التغييرات</span>
         </button>
       </div>
-    </div>
+
+      <hr className="border-gray-100" />
+
+      {/* 4. منطقة الخطر (حذف الحساب) */}
+      <div className="space-y-4 pt-2">
+        <div>
+          <h3 className="text-base font-extrabold text-rose-600">حذف الحساب</h3>
+          <p className="text-xs text-gray-400 mt-0.5">
+            إجراء نهائي ولا يمكن التراجع عنه.
+          </p>
+        </div>
+
+        <div className="space-y-3 text-xs text-gray-600 leading-relaxed bg-rose-50/50 p-4 rounded-xl border border-rose-100">
+          <p>
+            يرجى الملاحظة: حذف حسابك وبياناتك الشخصية دائم ولا يمكن التراجع عنه.
+            لن تتمكن المنصة من استعادة الحساب أو البيانات بعد إتمام الحذف.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => confirm("هل أنت تأكد من رغبتك في حذف الحساب؟")}
+          className="bg-rose-100 hover:bg-rose-200 text-rose-600 px-6 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer"
+        >
+          حذف الحساب نهائياً
+        </button>
+      </div>
+    </form>
   );
 }

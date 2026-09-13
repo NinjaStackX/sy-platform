@@ -28,13 +28,13 @@ export default function VolunteerProjectsPage() {
               <h1 className="text-2xl font-black text-slate-800">
                 المشاريع التطوعية
               </h1>
-              <div className="flex items-center gap-2 text-xs text-slate-400 mt-2">
+              {/* <div className="flex items-center gap-2 text-xs text-slate-400 mt-2">
                 <span>الرئيسية</span>
                 <span>/</span>
                 <span className="text-sky-500 font-bold">
                   المشاريع التطوعية
                 </span>
-              </div>
+              </div> */}
             </div>
             <Link
               href="/projects/join"

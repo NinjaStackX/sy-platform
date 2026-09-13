@@ -26,7 +26,7 @@ export default function RegisterPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // هنا يمكنك إضافة منطق إنشاء الحساب أو الاتصال بالخادم
-    router.push("/profile");
+    router.push("/dashboard");
   };
 
   return (

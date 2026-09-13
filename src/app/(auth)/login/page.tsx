@@ -30,7 +30,7 @@ export default function LoginPage() {
     // يمكنك هنا وضع منطق التحقق أو الاتصال بالـ API (مثل NextAuth)
 
     // الانتقال المباشر إلى صفحة البروفايل
-    router.push("/profile");
+    router.push("/dashboard");
   };
 
   return (

@@ -29,7 +29,7 @@ export default function AboutPage() {
         {/* Header Section */}
         <motion.div variants={itemVariants} className="text-center space-y-6">
           <h1 className="text-4xl sm:text-5xl font-black text-slate-800">
-            من نحن
+            من نحن و كيف نعمل
           </h1>
           <p className="text-slate-500 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-medium">
             نحن منصة تعليمية رائدة تهدف إلى سد الفجوة بين التعليم الأكاديمي

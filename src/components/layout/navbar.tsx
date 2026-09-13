@@ -26,17 +26,7 @@ export function Navbar() {
         <div className="flex items-center gap-8">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#1da1f2] flex items-center justify-center text-white font-bold text-xl shadow-sm">
-              S
-            </div>
-            <div className="flex flex-col border-r-2 border-gray-200 pr-2.5">
-              <span className="text-base font-extrabold text-[#0d2137] leading-tight">
-                المنصة السورية
-              </span>
-              <span className="text-[10px] tracking-wider text-gray-400 font-medium uppercase">
-                Syrian Platform
-              </span>
-            </div>
+            <Image src="/logo.jpg" alt="Logo" width={100} height={40} />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -97,18 +87,20 @@ export function Navbar() {
 
           {/* Profile Badge */}
           <Link
-            href={"/profile"}
+            href={"/dashboard"}
             className="hidden sm:flex items-center gap-2 pr-3 border-r border-gray-200"
           >
             <div className="relative w-9 h-9 rounded-full overflow-hidden border border-sky-100 shadow-sm">
               <Image
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80"
-                alt="ملفي الشخصي"
+                alt="المهندس. بشار معاز"
                 fill
                 className="object-cover"
               />
             </div>
-            <span className="text-xs font-bold text-gray-800">ملفي الشخصي</span>
+            <span className="text-xs font-bold text-gray-800">
+              المهندس. بشار معاز
+            </span>
           </Link>
 
           {/* Mobile Menu Toggle Button */}

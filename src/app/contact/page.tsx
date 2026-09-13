@@ -33,7 +33,7 @@ export default function ContactPage() {
                   البريد الإلكتروني
                 </h4>
                 <p className="text-xs text-slate-500 font-medium">
-                  support@platform.com
+                  bashar.maaz.dev@gmail.com
                 </p>
               </div>
             </div>
@@ -47,7 +47,7 @@ export default function ContactPage() {
                   رقم الهاتف
                 </h4>
                 <p className="text-xs text-slate-500 font-medium" dir="ltr">
-                  +963 999 000 000
+                  +963 998 058 357
                 </p>
               </div>
             </div>
@@ -75,7 +75,19 @@ export default function ContactPage() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm"
         >
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const items = [0, 1, 2].map((i) => {
+                if (i == 2) {
+                  return e.target.getElementsByTagName("textarea")[0].value;
+                }
+                return e.target.getElementsByTagName("input")[i].value;
+              });
+              console.log(items);
+            }}
+          >
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">
@@ -106,8 +118,9 @@ export default function ContactPage() {
                 </label>
                 <textarea
                   rows={4}
+                  name="details"
                   placeholder="كيف يمكننا مساعدتك؟"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-sky-400 focus:bg-white transition"
+                  className="text-black w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-sky-400 focus:bg-white transition"
                 ></textarea>
               </div>
             </div>

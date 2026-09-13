@@ -90,15 +90,15 @@ export function Footer() {
           <h4 className="text-sm font-bold text-sky-400 mb-4">اتصل بنا</h4>
           <div className="flex items-center gap-2 text-xs text-slate-300">
             <MapPin className="w-4 h-4 text-sky-400 shrink-0" />
-            <span>سوريا - دمشق - شارع الثورة</span>
+            <span>سوريا -حلب - الجميلية</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-300">
             <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-            <span>info@syrianplatform.com</span>
+            <span>bashar.maaz.dev@gmail.com</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-slate-300">
             <Phone className="w-4 h-4 text-sky-400 shrink-0" />
-            <span>+963 11 000 0000</span>
+            <span>+963 998 058 357</span>
           </div>
         </div>
       </div>
