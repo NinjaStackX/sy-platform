@@ -1,20 +1,55 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Search, Bell, Globe, Menu, X } from "lucide-react";
+import { Search, Bell, Globe, Menu, X, CheckCircle, BookOpen, MessageSquare } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 // 1. استيراد ملف i18n المباشر كغطاء أمان لضمان وجود الدالة دائماً
 import i18nConfig from "@/lib/i18n";
 
+// بيانات الإشعارات التجريبية
+const mockNotifications = [
+  {
+    id: 1,
+    title: "تمت إضافة درس جديد",
+    description: "تم نشر درس جديد في دورة React & Next.js المتقدمة.",
+    time: "منذ 10 دقائق",
+    unread: true,
+    icon: BookOpen,
+    iconColor: "text-sky-500 bg-sky-50",
+  },
+  {
+    id: 2,
+    title: "رد جديد على منشورك",
+    description: "قام أحمد بالرد على تساؤلك في قسم المنتدى.",
+    time: "منذ ساعة",
+    unread: true,
+    icon: MessageSquare,
+    iconColor: "text-amber-500 bg-amber-50",
+  },
+  {
+    id: 3,
+    title: "تم إصدار الشهادة",
+    description: "تهانينا! شهادة إتمام دورة Tailwind CSS جاهزة للتحميل.",
+    time: "منذ يومين",
+    unread: false,
+    icon: CheckCircle,
+    iconColor: "text-emerald-500 bg-emerald-50",
+  },
+];
+
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notifications, setNotifications] = useState(mockNotifications);
   const [searchQuery, setSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
+
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   // استخدام useTranslation للجزء التفاعلي
   const { i18n, t } = useTranslation("common");
@@ -26,14 +61,24 @@ export function Navbar() {
     { name: t("nav.projects"), href: "/projects" },
     { name: t("nav.contact"), href: "/contact" },
   ];
+
   // التأكد من عمل المكون في المتصفح لتفادي مشاكل الـ Hydration
   useEffect(() => {
     setMounted(true);
+
+    // إغلاق نافذة التنبيهات عند النقر خارجها
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
+        setNotificationsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // دالة التبديل الآمنة
   const toggleLanguage = () => {
-    // نستخدم الكائن المتوفر إما من הـ Hook أو من ملف التهيئة المباشر
     const activeI18n = i18n?.changeLanguage ? i18n : i18nConfig;
     const currentLang = activeI18n.language || "ar";
     const newLang = currentLang === "ar" ? "en" : "ar";
@@ -45,9 +90,12 @@ export function Navbar() {
     document.documentElement.lang = newLang;
   };
 
-  const currentLanguage = mounted
-    ? i18n?.language || i18nConfig.language || "ar"
-    : "ar";
+  const markAllAsRead = () => {
+    setNotifications((prev) => prev.map((item) => ({ ...item, unread: false })));
+  };
+
+  const hasUnread = notifications.some((item) => item.unread);
+  const currentLanguage = mounted ? i18n?.language || i18nConfig.language || "ar" : "ar";
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100 font-sans">
@@ -96,13 +144,97 @@ export function Navbar() {
 
         {/* Left Section: User Controls & Profile */}
         <div className="flex items-center gap-3">
-          <button
-            aria-label="Notifications"
-            className="w-10 h-10 rounded-xl bg-[#f4f6f8] flex items-center justify-center text-gray-600 hover:bg-gray-200 transition relative"
-          >
-            <Bell className="w-4 h-4" />
-            <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
-          </button>
+          {/* 🔔 Notification Trigger & Dropdown Dialog */}
+          <div className="relative" ref={popoverRef}>
+            <button
+              onClick={() => setNotificationsOpen(!notificationsOpen)}
+              aria-label="Notifications"
+              className={`w-10 h-10 rounded-xl flex items-center justify-center transition relative ${
+                notificationsOpen
+                  ? "bg-sky-50 text-sky-600"
+                  : "bg-[#f4f6f8] text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              <Bell className="w-4 h-4" />
+              {hasUnread && (
+                <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
+              )}
+            </button>
+
+            {/* Notification Dialog Panel */}
+            {notificationsOpen && (
+              <div className="absolute ltr:right-0 rtl:left-0 mt-3 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="p-4 border-b border-gray-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-bold text-gray-800">التنبيهات</h3>
+                    {hasUnread && (
+                      <span className="text-[10px] font-semibold bg-rose-50 text-rose-500 px-2 py-0.5 rounded-full">
+                        جديد
+                      </span>
+                    )}
+                  </div>
+                  {hasUnread && (
+                    <button
+                      onClick={markAllAsRead}
+                      className="text-xs font-semibold text-sky-500 hover:text-sky-600 transition"
+                    >
+                      تحديد الكل كمقروء
+                    </button>
+                  )}
+                </div>
+
+                <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
+                  {notifications.length > 0 ? (
+                    notifications.map((item) => {
+                      const IconComponent = item.icon;
+                      return (
+                        <div
+                          key={item.id}
+                          className={`p-3.5 flex items-start gap-3 hover:bg-gray-50/80 transition cursor-pointer ${
+                            item.unread ? "bg-sky-50/30" : ""
+                          }`}
+                        >
+                          <div className={`p-2 rounded-xl shrink-0 ${item.iconColor}`}>
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between gap-2 mb-0.5">
+                              <p className="text-xs font-bold text-gray-800 truncate">
+                                {item.title}
+                              </p>
+                              {item.unread && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
+                              )}
+                            </div>
+                            <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">
+                              {item.description}
+                            </p>
+                            <span className="text-[10px] text-gray-400 mt-1 block">
+                              {item.time}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="p-8 text-center text-gray-400 text-xs">
+                      لا توجد تنبيهات حالياً
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-3 bg-gray-50/50 border-t border-gray-100 text-center">
+                  <Link
+                    href="/notifications"
+                    onClick={() => setNotificationsOpen(false)}
+                    className="text-xs font-bold text-sky-600 hover:text-sky-700 transition"
+                  >
+                    عرض جميع التنبيهات
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* زر تغيير اللغة */}
           <button
