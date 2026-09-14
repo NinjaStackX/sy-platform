@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import "@/lib/i18n";
+import { DataProvider } from "@/context/DataContext";
+
+import { I18nProvider } from "@/components/I18nProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +31,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar />
-        {children}
+        <I18nProvider>
+          <DataProvider>{children}</DataProvider>
+        </I18nProvider>
         <Footer />
       </body>
     </html>

@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   ArrowLeft,
+  ArrowRight,
   BookOpen,
   Users,
   Trophy,
@@ -12,30 +15,37 @@ import {
   PlayCircle,
   CheckCircle,
   ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
-// بيانات وهمية لقسم الدورات المميزة
+// بيانات الدورات التدريبية المميزة
 const FEATURED_COURSES = [
   {
     id: "1",
-    title: "تطوير تطبيقات الويب المتقدمة باستخدام Next.js",
-    category: "برمجة",
+    titleAr: "تطوير تطبيقات الويب المتقدمة باستخدام Next.js",
+    titleEn: "Advanced Web Development with Next.js",
+    categoryAr: "برمجة",
+    categoryEn: "Programming",
     rating: 4.9,
     image:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80",
   },
   {
     id: "2",
-    title: "احترف تصميم واجهات المستخدم UI/UX",
-    category: "تصميم",
+    titleAr: "احترف تصميم واجهات المستخدم UI/UX",
+    titleEn: "Master UI/UX Interface Design",
+    categoryAr: "تصميم",
+    categoryEn: "Design",
     rating: 4.8,
     image:
       "https://images.unsplash.com/photo-1542744094-3a3121699709?w=600&q=80",
   },
   {
     id: "3",
-    title: "كورس اللغة الإنجليزية الشامل للمبتدئين",
-    category: "لغات",
+    titleAr: "كورس اللغة الإنجليزية الشامل للمبتدئين",
+    titleEn: "Comprehensive English Course for Beginners",
+    categoryAr: "لغات",
+    categoryEn: "Languages",
     rating: 4.7,
     image:
       "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&q=80",
@@ -43,6 +53,15 @@ const FEATURED_COURSES = [
 ];
 
 export default function HomePage() {
+  const { t, i18n } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isRtl = i18n.language === "ar";
+
   // إعدادات الحركة (Framer Motion Variants)
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
@@ -61,8 +80,11 @@ export default function HomePage() {
     },
   };
 
+  // تفادي مشاكل الـ Hydration حتى اكتمال تحميل المكون في المتصفح
+  if (!mounted) return null;
+
   return (
-    <main className="min-h-screen bg-slate-50 dir-rtl font-sans selection:bg-sky-200 overflow-hidden">
+    <main className="min-h-screen bg-slate-50 font-sans selection:bg-sky-200 overflow-hidden">
       {/* 1. Hero Section */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-32 lg:pb-24 flex flex-col items-center text-center">
         <motion.div
@@ -80,7 +102,7 @@ export default function HomePage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
             </span>
-            منصتك الأولى للتعلم عن بُعد
+            {t("hero.badge")}
           </motion.div>
 
           {/* Main Headline */}
@@ -88,20 +110,18 @@ export default function HomePage() {
             variants={fadeUp}
             className="text-4xl sm:text-5xl lg:text-7xl font-black text-slate-800 tracking-tight leading-[1.2] mb-6 max-w-4xl"
           >
-            طوّر مهاراتك مع أفضل{" "}
+            {t("hero.title_part1")}{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-sky-400 to-[#60ceeb]">
-              الخبراء
+              {t("hero.title_highlight")}
             </span>{" "}
-            في مجالك
+            {t("hero.title_part2")}
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
             className="text-slate-500 text-sm sm:text-base lg:text-lg max-w-2xl mb-10 leading-relaxed font-medium"
           >
-            انضم إلى آلاف المتعلمين واستكشف مكتبة ضخمة من الدورات التدريبية
-            المصممة بعناية لتأخذك من الصفر وحتى الاحتراف في مجالات التكنولوجيا،
-            التصميم، واللغات.
+            {t("hero.description")}
           </motion.p>
 
           {/* Call to Actions */}
@@ -113,8 +133,12 @@ export default function HomePage() {
               href="/courses"
               className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#60ceeb] hover:bg-sky-400 text-white px-8 py-3.5 rounded-2xl text-sm font-bold transition shadow-lg shadow-sky-200/50 hover:shadow-sky-300/50 hover:-translate-y-0.5"
             >
-              <span>استكشف الدورات</span>
-              <ArrowLeft className="w-4 h-4" />
+              <span>{t("hero.explore")}</span>
+              {isRtl ? (
+                <ArrowLeft className="w-4 h-4" />
+              ) : (
+                <ArrowRight className="w-4 h-4" />
+              )}
             </Link>
 
             <Link
@@ -122,7 +146,7 @@ export default function HomePage() {
               className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-8 py-3.5 rounded-2xl text-sm font-bold transition shadow-sm hover:-translate-y-0.5"
             >
               <PlayCircle className="w-4 h-4 text-sky-500" />
-              <span>كيف نعمل؟</span>
+              <span>{t("hero.how_it_works")}</span>
             </Link>
           </motion.div>
         </motion.div>
@@ -136,27 +160,27 @@ export default function HomePage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-slate-100"
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x ltr:md:divide-x-reverse rtl:md:divide-x-reverse divide-slate-100"
           >
             {[
               {
                 icon: BookOpen,
-                count: "+500",
-                text: "دورة تدريبية متخصصة",
+                count: t("stats.courses_count"),
+                text: t("stats.courses_text"),
                 color: "text-indigo-500",
                 bg: "bg-indigo-50",
               },
               {
                 icon: Users,
-                count: "+50,000",
-                text: "طالب مسجل معنا",
+                count: t("stats.students_count"),
+                text: t("stats.students_text"),
                 color: "text-emerald-500",
                 bg: "bg-emerald-50",
               },
               {
                 icon: Trophy,
-                count: "شهادات",
-                text: "معتمدة وموثوقة",
+                count: t("stats.certificates_count"),
+                text: t("stats.certificates_text"),
                 color: "text-amber-500",
                 bg: "bg-amber-50",
               },
@@ -192,18 +216,22 @@ export default function HomePage() {
         >
           <div>
             <h2 className="text-3xl font-black text-slate-800 mb-2">
-              الأكثر مبيعاً
+              {t("featured.title")}
             </h2>
             <p className="text-slate-500 text-sm font-medium">
-              ابدأ رحلتك مع الكورسات التي يفضلها طلابنا
+              {t("featured.subtitle")}
             </p>
           </div>
           <Link
             href="/courses"
             className="hidden sm:flex items-center gap-1 text-sky-500 font-bold hover:text-sky-600 transition"
           >
-            <span>عرض الكل</span>
-            <ChevronLeft className="w-4 h-4" />
+            <span>{t("featured.view_all")}</span>
+            {isRtl ? (
+              <ChevronLeft className="w-4 h-4" />
+            ) : (
+              <ChevronRight className="w-4 h-4" />
+            )}
           </Link>
         </motion.div>
 
@@ -223,13 +251,14 @@ export default function HomePage() {
             >
               <Link href={`/courses/${course.id}`}>
                 <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                  <img
+                  <Image
                     src={course.image}
-                    alt={course.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    alt={isRtl ? course.titleAr : course.titleEn}
+                    fill
+                    className="object-cover group-hover:scale-105 transition duration-500"
                   />
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-slate-700 shadow-sm">
-                    {course.category}
+                  <div className="absolute top-3 ltr:left-3 rtl:right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-slate-700 shadow-sm">
+                    {isRtl ? course.categoryAr : course.categoryEn}
                   </div>
                 </div>
                 <div className="p-5 space-y-4">
@@ -238,7 +267,7 @@ export default function HomePage() {
                     <span>{course.rating}</span>
                   </div>
                   <h3 className="text-base font-black text-slate-800 group-hover:text-sky-500 transition line-clamp-2">
-                    {course.title}
+                    {isRtl ? course.titleAr : course.titleEn}
                   </h3>
                 </div>
               </Link>
@@ -251,21 +280,24 @@ export default function HomePage() {
       <section className="bg-white py-24 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: isRtl ? 50 : -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
             <h2 className="text-3xl sm:text-4xl font-black text-slate-800 leading-tight">
-              تعلم بالطريقة التي <span className="text-sky-500">تناسبك</span>{" "}
-              وفي أي وقت
+              {t("why_us.title_part1")}{" "}
+              <span className="text-sky-500">
+                {t("why_us.title_highlight")}
+              </span>{" "}
+              {t("why_us.title_part2")}
             </h2>
             <div className="space-y-6">
               {[
-                "وصول مدى الحياة لجميع محتويات الدورة.",
-                "تطبيقات عملية ومشاريع حقيقية لضمان الفهم.",
-                "دعم فني وتواصل مباشر مع المدربين.",
+                t("why_us.feature_1"),
+                t("why_us.feature_2"),
+                t("why_us.feature_3"),
               ].map((text, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-sky-50 flex items-center justify-center shrink-0">
@@ -284,13 +316,15 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            {/* زخرفة بصرية */}
             <div className="absolute inset-0 bg-gradient-to-tr from-sky-100 to-sky-50 rounded-[3rem] transform rotate-3 scale-105 -z-10"></div>
-            <img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
-              alt="Students learning"
-              className="rounded-[3rem] shadow-xl border border-white/50 object-cover w-full h-[400px]"
-            />
+            <div className="relative h-[400px] w-full rounded-[3rem] overflow-hidden shadow-xl border border-white/50">
+              <Image
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
+                alt="Students learning"
+                fill
+                className="object-cover"
+              />
+            </div>
           </motion.div>
         </div>
       </section>
@@ -305,21 +339,19 @@ export default function HomePage() {
             variants={fadeUp}
             className="bg-slate-800 rounded-[3rem] p-12 sm:p-16 relative overflow-hidden shadow-2xl"
           >
-            {/* تأثير ضوئي للخلفية */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-sky-500/20 to-transparent pointer-events-none"></div>
 
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 relative z-10">
-              هل أنت مستعد لبدء رحلة التعلم؟
+              {t("cta.title")}
             </h2>
             <p className="text-slate-300 text-sm sm:text-base mb-10 max-w-xl mx-auto relative z-10">
-              انضم إلينا اليوم وابدأ في بناء مستقبلك المهني مع أفضل الموارد
-              التعليمية المتاحة على الإنترنت.
+              {t("cta.description")}
             </p>
             <Link
-              href="login"
+              href="/login"
               className="inline-flex items-center justify-center gap-2 bg-[#60ceeb] hover:bg-sky-400 text-white px-10 py-4 rounded-2xl text-sm font-bold transition shadow-lg shadow-sky-500/30 hover:-translate-y-1 relative z-10"
             >
-              أنشئ حسابك مجاناً
+              {t("cta.button")}
             </Link>
           </motion.div>
         </div>

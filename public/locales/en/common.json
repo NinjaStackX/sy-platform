@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "forum": "Forum",
+    "projects": "Projects",
+    "contact": "Contact Us"
+  },
+  "hero": {
+    "badge": "Your #1 E-Learning Platform",
+    "title_part1": "Develop your skills with the best",
+    "title_highlight": "experts",
+    "title_part2": "in your field",
+    "description": "Join thousands of learners and explore a massive library of courses carefully designed to take you from scratch to mastery in Tech, Design, and Languages.",
+    "explore": "Explore Courses",
+    "how_it_works": "How it works?"
+  },
+  "stats": {
+    "courses_count": "+500",
+    "courses_text": "Specialized Courses",
+    "students_count": "+50,000",
+    "students_text": "Enrolled Students",
+    "certificates_count": "Certificates",
+    "certificates_text": "Accredited & Trusted"
+  },
+  "featured": {
+    "title": "Best Sellers",
+    "subtitle": "Start your journey with our top-rated courses",
+    "view_all": "View All"
+  },
+  "why_us": {
+    "title_part1": "Learn in the way that",
+    "title_highlight": "suits you",
+    "title_part2": "anytime",
+    "feature_1": "Lifetime access to all course contents.",
+    "feature_2": "Practical applications and real-world projects.",
+    "feature_3": "Technical support and direct interaction with instructors."
+  },
+  "cta": {
+    "title": "Ready to start your learning journey?",
+    "description": "Join us today and build your professional future with the best online learning resources.",
+    "button": "Create Free Account"
+  }
+}
