@@ -40,5 +40,17 @@
     "title": "Ready to start your learning journey?",
     "description": "Join us today and build your professional future with the best online learning resources.",
     "button": "Create Free Account"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications found.",
+    "unread": "Unread",
+    "all": "All",
+    "categories": {
+      "system": "System",
+      "course": "Courses",
+      "forum": "Forum"
+    }
   }
 }

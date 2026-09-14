@@ -392,7 +392,7 @@ export function Navbar() {
 
                   <div className="p-3 bg-gray-50/50 border-t border-gray-100 text-center">
                     <Link
-                      href="/notifications"
+                      href="/"
                       onClick={() => setNotificationsOpen(false)}
                       className="text-xs font-bold text-sky-600 hover:text-sky-700 transition"
                     >

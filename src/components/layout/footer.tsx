@@ -36,7 +36,7 @@ export function Footer() {
           <h4 className="text-sm font-bold text-sky-400 mb-4">الرئيسية</h4>
           <ul className="space-y-2.5 text-xs text-slate-300">
             <li>
-              <a href="#" className="hover:text-sky-400 transition">
+              <a href="/about" className="hover:text-sky-400 transition">
                 عن المنصة
               </a>
             </li>
