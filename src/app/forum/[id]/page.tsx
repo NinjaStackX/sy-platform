@@ -67,8 +67,6 @@ export default function PostDetailPage() {
         {/* Sidebar */}
         <ForumSidebar recentPosts={[mockDetailPost]} />
       </div>
-
-      <Footer />
     </div>
   );
 }

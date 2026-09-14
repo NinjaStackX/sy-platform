@@ -70,7 +70,6 @@ export default function ForumPage() {
       </div>
 
       {/* Global Dark Footer */}
-      <Footer />
     </div>
   );
 }

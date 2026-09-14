@@ -33,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         <I18nProvider>
           <DataProvider>
-            <div className="h-screen bg-white">{children}</div>
+            <div className="min-h-screen">{children}</div>
           </DataProvider>
         </I18nProvider>
         <Footer />
