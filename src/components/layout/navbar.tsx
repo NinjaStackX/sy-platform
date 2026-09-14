@@ -468,7 +468,7 @@ export function Navbar() {
 
                   <div className="p-2 space-y-0.5">
                     <Link
-                      href="/profile"
+                      href="/dashboard/profile"
                       onClick={() => setProfileOpen(false)}
                       className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-gray-50 transition"
                     >
@@ -476,7 +476,7 @@ export function Navbar() {
                       <span>{currentLanguage === "en" ? "My Profile" : "الملف الشخصي"}</span>
                     </Link>
                     <Link
-                      href="/settings"
+                      href="/dashboard/settings"
                       onClick={() => setProfileOpen(false)}
                       className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-gray-50 transition"
                     >
