@@ -32,7 +32,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Navbar />
         <I18nProvider>
-          <DataProvider>{children}</DataProvider>
+          <DataProvider>
+            <div className="h-screen bg-white">{children}</div>
+          </DataProvider>
         </I18nProvider>
         <Footer />
       </body>
