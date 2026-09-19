@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -5,52 +6,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
   Users,
   Trophy,
-  Star,
   PlayCircle,
   CheckCircle,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
-// بيانات الدورات التدريبية المميزة
-const FEATURED_COURSES = [
-  {
-    id: "1",
-    titleAr: "تطوير تطبيقات الويب المتقدمة باستخدام Next.js",
-    titleEn: "Advanced Web Development with Next.js",
-    categoryAr: "برمجة",
-    categoryEn: "Programming",
-    rating: 4.9,
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80",
-  },
-  {
-    id: "2",
-    titleAr: "احترف تصميم واجهات المستخدم UI/UX",
-    titleEn: "Master UI/UX Interface Design",
-    categoryAr: "تصميم",
-    categoryEn: "Design",
-    rating: 4.8,
-    image:
-      "https://images.unsplash.com/photo-1542744094-3a3121699709?w=600&q=80",
-  },
-  {
-    id: "3",
-    titleAr: "كورس اللغة الإنجليزية الشامل للمبتدئين",
-    titleEn: "Comprehensive English Course for Beginners",
-    categoryAr: "لغات",
-    categoryEn: "Languages",
-    rating: 4.7,
-    image:
-      "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&q=80",
-  },
-];
+import FeaturedCoursesSection from "@/components/features/home/FeaturedCoursesSection";
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
@@ -62,7 +31,6 @@ export default function HomePage() {
 
   const isRtl = i18n.language === "ar";
 
-  // إعدادات الحركة (Framer Motion Variants)
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -80,11 +48,12 @@ export default function HomePage() {
     },
   };
 
-  // تفادي مشاكل الـ Hydration حتى اكتمال تحميل المكون في المتصفح
   if (!mounted) return null;
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans selection:bg-sky-200 overflow-hidden">
+      <ToastContainer rtl={isRtl} />
+
       {/* 1. Hero Section */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-32 lg:pb-24 flex flex-col items-center text-center">
         <motion.div
@@ -93,7 +62,6 @@ export default function HomePage() {
           animate="visible"
           className="flex flex-col items-center w-full"
         >
-          {/* Badge */}
           <motion.div
             variants={fadeUp}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 border border-sky-100 text-sky-600 text-xs font-bold mb-8 shadow-sm"
@@ -105,7 +73,6 @@ export default function HomePage() {
             {t("hero.badge")}
           </motion.div>
 
-          {/* Main Headline */}
           <motion.h1
             variants={fadeUp}
             className="text-4xl sm:text-5xl lg:text-7xl font-black text-slate-800 tracking-tight leading-[1.2] mb-6 max-w-4xl"
@@ -124,7 +91,6 @@ export default function HomePage() {
             {t("hero.description")}
           </motion.p>
 
-          {/* Call to Actions */}
           <motion.div
             variants={fadeUp}
             className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
@@ -205,7 +171,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. Featured Courses */}
+      {/* 3. Featured Courses Section */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
@@ -235,48 +201,14 @@ export default function HomePage() {
           </Link>
         </motion.div>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {FEATURED_COURSES.map((course) => (
-            <motion.div
-              key={course.id}
-              variants={fadeUp}
-              whileHover={{ y: -5 }}
-              className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group cursor-pointer"
-            >
-              <Link href={`/courses/${course.id}`}>
-                <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                  <Image
-                    src={course.image}
-                    alt={isRtl ? course.titleAr : course.titleEn}
-                    fill
-                    className="object-cover group-hover:scale-105 transition duration-500"
-                  />
-                  <div className="absolute top-3 ltr:left-3 rtl:right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-slate-700 shadow-sm">
-                    {isRtl ? course.categoryAr : course.categoryEn}
-                  </div>
-                </div>
-                <div className="p-5 space-y-4">
-                  <div className="flex items-center gap-1 text-amber-400 font-bold text-xs">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span>{course.rating}</span>
-                  </div>
-                  <h3 className="text-base font-black text-slate-800 group-hover:text-sky-500 transition line-clamp-2">
-                    {isRtl ? course.titleAr : course.titleEn}
-                  </h3>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
+        {/* استدعاء مكون الكورسات المحدث ليعمل بواسطة useCourses */}
+        <FeaturedCoursesSection
+          fadeUp={fadeUp}
+          staggerContainer={staggerContainer}
+        />
       </section>
 
-      {/* 4. Why Choose Us / Features */}
+      {/* 4. Why Choose Us Section */}
       <section className="bg-white py-24 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div

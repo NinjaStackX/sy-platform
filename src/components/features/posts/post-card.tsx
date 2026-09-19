@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Post } from "@/types/forum";
+import { Post } from "@/types/posts";
 
 interface PostCardProps {
   post: Post;
@@ -31,7 +31,7 @@ export function PostCard({ post }: PostCardProps) {
 
           {/* Title */}
           <h3 className="text-base font-bold text-gray-800 hover:text-sky-500 transition line-clamp-2">
-            <Link href={`/forum/${post.id}`}>{post.title}</Link>
+            <Link href={`/posts/${post.id}`}>{post.title}</Link>
           </h3>
 
           {/* Excerpt */}
@@ -63,7 +63,7 @@ export function PostCard({ post }: PostCardProps) {
         </div>
 
         <Link
-          href={`/forum/${post.id}`}
+          href={`/posts/${post.id}`}
           className="px-4 py-1.5 bg-sky-50 text-sky-600 rounded-lg text-xs font-semibold hover:bg-sky-400 hover:text-white transition"
         >
           عرض المنشور

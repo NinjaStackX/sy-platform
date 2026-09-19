@@ -2,7 +2,7 @@
   "nav": {
     "home": "Home",
     "courses": "Courses",
-    "forum": "Forum",
+    "Post": "Post",
     "projects": "Projects",
     "contact": "Contact Us"
   },
@@ -50,7 +50,7 @@
     "categories": {
       "system": "System",
       "course": "Courses",
-      "forum": "Forum"
+      "Post": "Post"
     }
   }
 }

@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import "@/lib/i18n";
 import { DataProvider } from "@/context/DataContext";
 
-import { I18nProvider } from "@/components/I18nProvider";
+import Providers from "@/components/providers/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +30,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col ">
-        <Navbar />
-        <I18nProvider>
+        <Providers>
+          <Navbar />
           <DataProvider>
             <div className="min-h-screen bg-white">{children}</div>
           </DataProvider>
-        </I18nProvider>
-        <Footer />
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

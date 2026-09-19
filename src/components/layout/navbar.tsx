@@ -24,7 +24,6 @@ import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 
 // 1. استيراد ملف i18n المباشر
-import i18nConfig from "@/lib/i18n";
 
 // بيانات الإشعارات التجريبية
 const mockNotifications = [
@@ -59,12 +58,42 @@ const mockNotifications = [
 
 // بيانات البحث التجريبية
 const searchableItems = [
-  { id: 1, title: "دورة أساسيات React & Next.js", type: "courses", href: "/courses/react" },
-  { id: 2, title: "دورة تصميم واجهات المستخدم UI/UX", type: "courses", href: "/courses/ui-ux" },
-  { id: 3, title: "مشروع بناء منصة تعليمية تطوعية", type: "projects", href: "/projects/edu-platform" },
-  { id: 4, title: "مشروع تشجير المدينة الذكية", type: "projects", href: "/projects/green-city" },
-  { id: 5, title: "مناقشة أحدث ميزات TypeScript 5", type: "forum", href: "/forum/ts-5" },
-  { id: 6, title: "استفسارات حول الربط مع Prisma ORM", type: "forum", href: "/forum/prisma-help" },
+  {
+    id: 1,
+    title: "دورة أساسيات React & Next.js",
+    type: "courses",
+    href: "/courses/react",
+  },
+  {
+    id: 2,
+    title: "دورة تصميم واجهات المستخدم UI/UX",
+    type: "courses",
+    href: "/courses/ui-ux",
+  },
+  {
+    id: 3,
+    title: "مشروع بناء منصة تعليمية تطوعية",
+    type: "projects",
+    href: "/projects/edu-platform",
+  },
+  {
+    id: 4,
+    title: "مشروع تشجير المدينة الذكية",
+    type: "projects",
+    href: "/projects/green-city",
+  },
+  {
+    id: 5,
+    title: "مناقشة أحدث ميزات TypeScript 5",
+    type: "Post",
+    href: "/posts/ts-5",
+  },
+  {
+    id: 6,
+    title: "استفسارات حول الربط مع Prisma ORM",
+    type: "Post",
+    href: "/posts/prisma-help",
+  },
 ];
 
 export function Navbar() {
@@ -86,7 +115,7 @@ export function Navbar() {
   const navItems = [
     { name: t("nav.home"), href: "/" },
     { name: t("nav.courses"), href: "/courses" },
-    { name: t("nav.forum"), href: "/forum" },
+    { name: t("nav.Post"), href: "/posts" },
     { name: t("nav.projects"), href: "/projects" },
     { name: t("nav.contact"), href: "/contact" },
   ];
@@ -95,13 +124,22 @@ export function Navbar() {
     setMounted(true);
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (notificationsRef.current && !notificationsRef.current.contains(event.target as Node)) {
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target as Node)
+      ) {
         setNotificationsOpen(false);
       }
-      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
         setProfileOpen(false);
       }
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setSearchFocused(false);
       }
     };
@@ -122,16 +160,20 @@ export function Navbar() {
   };
 
   const markAllAsRead = () => {
-    setNotifications((prev) => prev.map((item) => ({ ...item, unread: false })));
+    setNotifications((prev) =>
+      prev.map((item) => ({ ...item, unread: false })),
+    );
   };
 
   const hasUnread = notifications.some((item) => item.unread);
-  const currentLanguage = mounted ? i18n?.language || i18nConfig.language || "ar" : "ar";
+  const currentLanguage = mounted
+    ? i18n?.language || i18nConfig.language || "ar"
+    : "ar";
 
   // تصفية نتائج البحث
   const filteredSearchItems = searchQuery.trim()
     ? searchableItems.filter((item) =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase())
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()),
       )
     : [];
 
@@ -141,25 +183,37 @@ export function Navbar() {
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
     return parts.map((part, index) =>
       part.toLowerCase() === highlight.toLowerCase() ? (
-        <span key={index} className="bg-sky-100 text-sky-700 font-bold px-0.5 rounded">
+        <span
+          key={index}
+          className="bg-sky-100 text-sky-700 font-bold px-0.5 rounded"
+        >
           {part}
         </span>
       ) : (
         part
-      )
+      ),
     );
   };
 
-  const userName = currentLanguage === "en" ? "Bashar Maaz Eng" : "المهندس. بشار معاز";
+  const userName =
+    currentLanguage === "en" ? "Bashar Maaz Eng" : "المهندس. بشار معاز";
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 font-sans transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-        
         {/* Right Section: Logo & Main Navigation */}
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 transition-transform hover:scale-105 active:scale-95">
-            <Image src="/logo.jpg" alt="Logo" width={100} height={40} priority />
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 shrink-0 transition-transform hover:scale-105 active:scale-95"
+          >
+            <Image
+              src="/logo.jpg"
+              alt="Logo"
+              width={100}
+              height={40}
+              priority
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-6">
@@ -172,7 +226,9 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={`relative text-sm font-bold transition-colors py-1 ${
-                    isActive ? "text-[#0d2137]" : "text-gray-500 hover:text-sky-500"
+                    isActive
+                      ? "text-[#0d2137]"
+                      : "text-gray-500 hover:text-sky-500"
                   }`}
                 >
                   {item.name}
@@ -180,7 +236,11 @@ export function Navbar() {
                     <motion.div
                       layoutId="activeTab"
                       className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500 rounded-full"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </Link>
@@ -190,7 +250,10 @@ export function Navbar() {
         </div>
 
         {/* 🔍 Middle Section: Search Bar & Live Dropdown */}
-        <div className="hidden md:flex flex-1 max-w-xs mx-2 relative" ref={searchRef}>
+        <div
+          className="hidden md:flex flex-1 max-w-xs mx-2 relative"
+          ref={searchRef}
+        >
           <div className="relative w-full">
             <input
               type="text"
@@ -234,7 +297,9 @@ export function Navbar() {
                               className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-sky-50 hover:text-sky-600 transition"
                             >
                               <BookOpen className="w-3.5 h-3.5 text-sky-500" />
-                              <span>{highlightText(item.title, searchQuery)}</span>
+                              <span>
+                                {highlightText(item.title, searchQuery)}
+                              </span>
                             </Link>
                           ))}
                       </div>
@@ -244,7 +309,9 @@ export function Navbar() {
                     {filteredSearchItems.some((i) => i.type === "projects") && (
                       <div>
                         <span className="text-[10px] font-bold text-gray-400 px-3 py-1 block border-t border-gray-50 mt-1">
-                          {currentLanguage === "en" ? "Volunteer Projects" : "المشاريع التطوعية"}
+                          {currentLanguage === "en"
+                            ? "Volunteer Projects"
+                            : "المشاريع التطوعية"}
                         </span>
                         {filteredSearchItems
                           .filter((i) => i.type === "projects")
@@ -256,20 +323,22 @@ export function Navbar() {
                               className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition"
                             >
                               <HeartHandshake className="w-3.5 h-3.5 text-emerald-500" />
-                              <span>{highlightText(item.title, searchQuery)}</span>
+                              <span>
+                                {highlightText(item.title, searchQuery)}
+                              </span>
                             </Link>
                           ))}
                       </div>
                     )}
 
                     {/* المنتديات */}
-                    {filteredSearchItems.some((i) => i.type === "forum") && (
+                    {filteredSearchItems.some((i) => i.type === "Post") && (
                       <div>
                         <span className="text-[10px] font-bold text-gray-400 px-3 py-1 block border-t border-gray-50 mt-1">
-                          {currentLanguage === "en" ? "Forum" : "المنتدى"}
+                          {currentLanguage === "en" ? "Post" : "المنتدى"}
                         </span>
                         {filteredSearchItems
-                          .filter((i) => i.type === "forum")
+                          .filter((i) => i.type === "Post")
                           .map((item) => (
                             <Link
                               key={item.id}
@@ -278,7 +347,9 @@ export function Navbar() {
                               className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition"
                             >
                               <MessageSquare className="w-3.5 h-3.5 text-amber-500" />
-                              <span>{highlightText(item.title, searchQuery)}</span>
+                              <span>
+                                {highlightText(item.title, searchQuery)}
+                              </span>
                             </Link>
                           ))}
                       </div>
@@ -286,7 +357,9 @@ export function Navbar() {
                   </div>
                 ) : (
                   <div className="p-4 text-center text-xs text-gray-400">
-                    {currentLanguage === "en" ? "No results found" : "لا توجد نتائج طابقت بحثك"}
+                    {currentLanguage === "en"
+                      ? "No results found"
+                      : "لا توجد نتائج طابقت بحثك"}
                   </div>
                 )}
               </motion.div>
@@ -296,7 +369,6 @@ export function Navbar() {
 
         {/* Left Section: User Controls & Profile */}
         <div className="flex items-center gap-3">
-          
           {/* 🔔 Notifications Button & Dialog */}
           <div className="relative" ref={notificationsRef}>
             <motion.button
@@ -331,7 +403,9 @@ export function Navbar() {
                   <div className="p-4 border-b border-gray-100 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <h3 className="text-sm font-bold text-gray-800">
-                        {currentLanguage === "en" ? "Notifications" : "التنبيهات"}
+                        {currentLanguage === "en"
+                          ? "Notifications"
+                          : "التنبيهات"}
                       </h3>
                       {hasUnread && (
                         <span className="text-[10px] font-semibold bg-rose-50 text-rose-500 px-2 py-0.5 rounded-full">
@@ -344,7 +418,9 @@ export function Navbar() {
                         onClick={markAllAsRead}
                         className="text-xs font-semibold text-sky-500 hover:text-sky-600 transition"
                       >
-                        {currentLanguage === "en" ? "Mark all read" : "تحديد الكل كمقروء"}
+                        {currentLanguage === "en"
+                          ? "Mark all read"
+                          : "تحديد الكل كمقروء"}
                       </button>
                     )}
                   </div>
@@ -356,12 +432,16 @@ export function Navbar() {
                         return (
                           <motion.div
                             key={item.id}
-                            whileHover={{ backgroundColor: "rgba(249, 250, 251, 1)" }}
+                            whileHover={{
+                              backgroundColor: "rgba(249, 250, 251, 1)",
+                            }}
                             className={`p-3.5 flex items-start gap-3 transition cursor-pointer ${
                               item.unread ? "bg-sky-50/30" : ""
                             }`}
                           >
-                            <div className={`p-2 rounded-xl shrink-0 ${item.iconColor}`}>
+                            <div
+                              className={`p-2 rounded-xl shrink-0 ${item.iconColor}`}
+                            >
                               <IconComponent className="w-4 h-4" />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -385,7 +465,9 @@ export function Navbar() {
                       })
                     ) : (
                       <div className="p-8 text-center text-gray-400 text-xs">
-                        {currentLanguage === "en" ? "No notifications" : "لا توجد تنبيهات حالياً"}
+                        {currentLanguage === "en"
+                          ? "No notifications"
+                          : "لا توجد تنبيهات حالياً"}
                       </div>
                     )}
                   </div>
@@ -396,7 +478,9 @@ export function Navbar() {
                       onClick={() => setNotificationsOpen(false)}
                       className="text-xs font-bold text-sky-600 hover:text-sky-700 transition"
                     >
-                      {currentLanguage === "en" ? "View all notifications" : "عرض جميع التنبيهات"}
+                      {currentLanguage === "en"
+                        ? "View all notifications"
+                        : "عرض جميع التنبيهات"}
                     </Link>
                   </div>
                 </motion.div>
@@ -435,7 +519,9 @@ export function Navbar() {
                   className="object-cover"
                 />
               </div>
-              <span className="text-xs font-bold text-gray-800">{userName}</span>
+              <span className="text-xs font-bold text-gray-800">
+                {userName}
+              </span>
             </button>
 
             {/* Profile Dropdown Menu */}
@@ -458,10 +544,16 @@ export function Navbar() {
                       />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-gray-800">{userName}</h4>
-                      <p className="text-[10px] text-gray-500 mt-0.5">bashar@example.com</p>
+                      <h4 className="text-xs font-bold text-gray-800">
+                        {userName}
+                      </h4>
+                      <p className="text-[10px] text-gray-500 mt-0.5">
+                        bashar@example.com
+                      </p>
                       <span className="inline-block mt-1 text-[9px] bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full font-semibold">
-                        {currentLanguage === "en" ? "Verified Account" : "حساب موثق"}
+                        {currentLanguage === "en"
+                          ? "Verified Account"
+                          : "حساب موثق"}
                       </span>
                     </div>
                   </div>
@@ -473,7 +565,11 @@ export function Navbar() {
                       className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-gray-50 transition"
                     >
                       <User className="w-4 h-4 text-gray-400" />
-                      <span>{currentLanguage === "en" ? "My Profile" : "الملف الشخصي"}</span>
+                      <span>
+                        {currentLanguage === "en"
+                          ? "My Profile"
+                          : "الملف الشخصي"}
+                      </span>
                     </Link>
                     <Link
                       href="/dashboard/settings"
@@ -481,7 +577,9 @@ export function Navbar() {
                       className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-gray-50 transition"
                     >
                       <Settings className="w-4 h-4 text-gray-400" />
-                      <span>{currentLanguage === "en" ? "Settings" : "الإعدادات"}</span>
+                      <span>
+                        {currentLanguage === "en" ? "Settings" : "الإعدادات"}
+                      </span>
                     </Link>
                   </div>
 
@@ -492,7 +590,9 @@ export function Navbar() {
                       onClick={() => setProfileOpen(false)}
                       className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold transition shadow-sm"
                     >
-                      <span>{currentLanguage === "en" ? "Show More" : "عرض المزيد"}</span>
+                      <span>
+                        {currentLanguage === "en" ? "Show More" : "عرض المزيد"}
+                      </span>
                       {currentLanguage === "en" ? (
                         <ChevronRight className="w-4 h-4" />
                       ) : (
@@ -591,9 +691,13 @@ export function Navbar() {
                     />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-gray-800">{userName}</p>
+                    <p className="text-xs font-bold text-gray-800">
+                      {userName}
+                    </p>
                     <p className="text-[10px] text-gray-400">
-                      {currentLanguage === "en" ? "Verified Account" : "حساب موثق"}
+                      {currentLanguage === "en"
+                        ? "Verified Account"
+                        : "حساب موثق"}
                     </p>
                   </div>
                 </div>

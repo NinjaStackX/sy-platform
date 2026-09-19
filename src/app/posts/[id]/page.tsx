@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import { GalleryGrid } from "@/components/features/forum/gallery-grid";
-import { ForumSidebar } from "@/components/features/forum/forum-sidebar";
+import { GalleryGrid } from "@/components/features/posts/gallery-grid";
+import { PostSidebar } from "@/components/features/posts/posts-sidebar";
 import { Footer } from "@/components/layout/footer";
-import { Post } from "@/types/forum";
+import { Post } from "@/types/posts";
 
 const mockDetailPost: Post = {
   id: "1",
@@ -65,7 +65,7 @@ export default function PostDetailPage() {
         </main>
 
         {/* Sidebar */}
-        <ForumSidebar recentPosts={[mockDetailPost]} />
+        <PostSidebar recentPosts={[mockDetailPost]} />
       </div>
     </div>
   );
